@@ -30,36 +30,37 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Messages invalides.' });
   }
 
-  // Conversion format → Gemini
-  // System prompt injecté dans le premier message
-  const geminiContents = messages.map((m, i) => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: i === 0 ? (SYSTEM_PROMPT + "\n\n---\n\n" + m.content) : m.content }]
-  }));
+  // Format Mistral
+  const mistralMessages = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...messages
+  ];
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`,
+      'https://api.mistral.ai/v1/chat/completions',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-goog-api-key': process.env.GEMINI_API_KEY
+          'Authorization': 'Bearer ' + process.env.MISTRAL_API_KEY
         },
         body: JSON.stringify({
-          contents: geminiContents,
-          generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
+          model: 'mistral-small-latest',
+          messages: mistralMessages,
+          max_tokens: 1500,
+          temperature: 0.7
         }),
       }
     );
 
     if (!response.ok) {
       const err = await response.json();
-      return res.status(response.status).json({ error: err.error?.message || 'Erreur API Gemini' });
+      return res.status(response.status).json({ error: err.message || 'Erreur API Mistral' });
     }
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const reply = data.choices?.[0]?.message?.content || '';
     return res.status(200).json({ reply });
 
   } catch (err) {
