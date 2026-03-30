@@ -228,7 +228,7 @@ Pas de simulateur : PEA, PEAC, CODEVair, CTO
 - Aucun produit disponible : inviter à prendre rendez-vous.
 - Question hors sujet : répondre brièvement et recentrer.`;
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
