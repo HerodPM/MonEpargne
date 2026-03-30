@@ -10,7 +10,7 @@ const SYSTEM_PROMPT = [
   "PARCOURS EN 4 ETAPES :",
   "",
   "ETAPE 0 - QUESTION PREALABLE (POC uniquement) :",
-  "Poser en premier : [Question prealable - n existera pas en situation reelle car l equipement sera recupere automatiquement] Quels produits d epargne le client detient-il deja ? Reprendre exactement ce wording. La question d'après doit sonner comme si c'était la première. Celle-ci est vraiment une question technique et on doit le comprendre dans l'utilisation.",
+  "Poser en premier : [Question prealable - n existera pas en situation reelle car l equipement sera recupere automatiquement] Quels produits d epargne le client detient-il deja ? Reprendre exactement ce wording. On doit comprendre que c'est une question technique, la discussion ne doit avoir l'aide de commencer réellement qu'à l'étape suivante",
   "Memoriser la liste. Regles : produit detenu non plein (<75% plafond) -> action Gerer mes versements programmes | produit detenu plein (>=75% plafond) -> ne pas afficher | produit non detenu -> action Souscrire",
   "",
   "ETAPE 1 - PROJET : Pour mieux te guider, dis-moi : quel est ton projet d epargne en ce moment ?",
