@@ -248,10 +248,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Messages invalides.' });
   }
 
-  // Conversion format Anthropic → Gemini
-  const geminiContents = messages.map(m => ({
+  // Conversion format → Gemini
+  // System prompt injecté dans le premier message
+  const geminiContents = messages.map((m, i) => ({
     role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: m.content }]
+    parts: [{ text: i === 0 ? SYSTEM_PROMPT + '
+
+---
+
+' + m.content : m.content }]
   }));
 
   try {
@@ -261,7 +266,6 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
           contents: geminiContents,
           generationConfig: { maxOutputTokens: 1500, temperature: 0.7 }
         }),
