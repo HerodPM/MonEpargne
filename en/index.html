@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Say CHEESE — Cheese & Wine Workshops in Paris</title>
+  <meta name="description" content="Cheese tasting and drink pairing workshops in Paris. For individuals, kids, and companies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <meta property="og:title" content="Say CHEESE — Cheese & Wine Pairing Workshops in Paris" />
+  <meta property="og:description" content="Cheese tasting and drink pairing workshops in Paris. For individuals, kids, and companies." />
+  <meta property="og:image" content="https://say-cheese-one.vercel.app/hero.png" />
+  <meta property="og:url" content="https://say-cheese.fr/en" />
+  <meta property="og:type" content="website" />
+  <link rel="alternate" hreflang="fr" href="https://say-cheese.fr/" />
+  <link rel="alternate" hreflang="en" href="https://say-cheese.fr/en/" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="logo"><img src="../logo.png" alt="Say cHEESE" class="logo-img" /></a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#ateliers">Workshops</a></li>
+      <li><a href="#tarifs">Pricing</a></li>
+      <li><a href="#contact" class="nav-cta">Book Now</a></li>
+      <li><a href="../index.html" class="lang-switch" onclick="try{localStorage.setItem('sc-lang','fr')}catch(e){}">FR</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <img src="../hero.png" alt="Cheese board" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content reveal">
+      <p class="hero-eyebrow">✦ Tasting Workshops in Paris ✦</p>
+      <h1>The Art of Cheese,<br /><em>Shared with Passion</em></h1>
+      <p class="hero-sub">Discover the secrets of exceptional cheeses and drink pairings — for individuals and companies</p>
+      <div class="hero-actions">
+        <a href="#ateliers" class="btn btn-primary">Explore the Workshops</a>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container about-grid">
+      <div class="about-image reveal">
+        <img src="../photo-hugues.jpg" alt="Hugues Duproz" />
+        <div class="about-badge">
+          <span class="badge-icon">🎓</span>
+          <span>Trained at the<br />French School of Cheese</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p class="section-label">Who I Am</p>
+        <h2>Hugues Duproz</h2>
+        <p class="about-lead">Tech professional by day, cheese enthusiast always.</p>
+        <p>For years, I've been exploring cheesemongers and meeting producers to discover the finest cheeses in Europe. My passion for terroir extends to wine and beer — a natural pairing that gives rise to the most delicious combinations.</p>
+        <p>Trained at the <strong>École Française du Fromage</strong> (French School of Cheese), specialized in sensory analysis <em>(identifying flavors and aromas)</em> and tasting facilitation, I started sharing my passion with friends, then colleagues, then groups of individuals, and today with companies.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-number">3</span>
+            <span class="stat-label">workshop formats</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">Paris</span>
+            <span class="stat-label">city center</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">passion & expertise</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATELIERS -->
+  <section id="ateliers">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">What I Offer</p>
+        <h2>The Workshops</h2>
+        <p class="section-desc">Sensory experiences designed for all audiences, at your accommodation or venue, within Paris.</p>
+      </div>
+      <div class="ateliers-grid">
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="../atelier1.jpg" alt="Exceptional cheeses" />
+            <span class="card-number">01</span>
+          </div>
+          <div class="card-body">
+            <h3>Discovering Exceptional Cheeses</h3>
+            <p>A journey through French and European terroirs. Learn to recognize, analyze, and appreciate exceptional cheeses — their history, their craft, their aromas.</p>
+            <ul class="card-details">
+              <li>🧀 Selection of rare and iconic cheeses</li>
+              <li>🍽️ Tasting included</li>
+              <li>📍 At your place or venue</li>
+              <li>👥 Individuals & companies</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Request a Quote</a>
+          </div>
+        </article>
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=85&fit=crop" alt="Cheese and wine pairing" />
+            <span class="card-number">02</span>
+          </div>
+          <div class="card-body">
+            <h3>How to Pair Cheese &amp; Drinks</h3>
+            <p>Wine, beer, cider… learn the rules and subtleties of food-and-drink pairing. An interactive workshop so you'll never serve the wrong wine with the wrong cheese again.</p>
+            <ul class="card-details">
+              <li>🍷 Wine, beer, and cider on the menu</li>
+              <li>🍽️ Tasting included</li>
+              <li>📍 At your place or venue</li>
+              <li>👥 Individuals & companies</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Request a Quote</a>
+          </div>
+        </article>
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="../atelier3.jpg" alt="Cheese workshop for kids" />
+            <span class="card-number">03</span>
+          </div>
+          <div class="card-body">
+            <h3>Cheese for Kids <span class="age-badge">Ages 3–12</span></h3>
+            <p>A fun, hands-on workshop designed especially for children. Touch, smell, taste: kids discover the fascinating world of cheese in a joyful, educational setting.</p>
+            <ul class="card-details">
+              <li>🎉 Fun & interactive format</li>
+              <li>🍽️ Tasting included</li>
+              <li>📍 At your place or elsewhere</li>
+              <li>👶 Ages 3 to 12</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Request a Quote</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉFÉRENCES -->
+  <section id="references">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Tried & Approved By</p>
+        <h2>Say CHEESE</h2>
+      </div>
+      <div class="refs-grid reveal">
+        <div class="ref-logo"><img src="../logo-fdj.png" alt="FDJ United" style="height:64px;" /></div>
+        <div class="ref-logo"><img src="../logo-bpce.png" alt="BPCE" /></div>
+        <div class="ref-logo"><img src="../logo-wefiit.png" alt="WeFiiT" style="height:32px;" /></div>
+        <div class="ref-logo"><img src="../logo-velite.svg" alt="Cabinet Vélite" style="height:36px;" /></div>
+        <div class="ref-logo"><img src="../logo-petiteforet.png" alt="Petite Forêt — Café et Ateliers" style="height:44px;" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMBIANCE STRIP -->
+  <div class="photo-strip">
+    <img src="../strip1.jpg" alt="" />
+    <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80&fit=crop" alt="" />
+    <img src="../strip3.jpg" alt="" />
+    <img src="../strip4.jpg" alt="" />
+    <img src="../strip5.jpg" alt="" />
+  </div>
+
+  <!-- TARIFS -->
+  <section id="tarifs">
+    <div class="container tarifs-inner reveal">
+      <div class="tarifs-text">
+        <p class="section-label">Pricing</p>
+        <h2>A Tailor-Made<br /><em>Experience</em></h2>
+        <p>Every workshop is adapted to your context: number of guests, location, duration, and product selection. Pricing is quote-based, tailored to your needs.</p>
+        <p>I work with your budget while keeping the quality of the selection impeccable.</p>
+        <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+      </div>
+      <div class="tarifs-cards">
+        <div class="tarif-card">
+          <span class="tarif-icon">🏠</span>
+          <h4>Individuals</h4>
+          <p>At your place, for a dinner with friends, a family evening, or a private event.</p>
+        </div>
+        <div class="tarif-card">
+          <span class="tarif-icon">🏢</span>
+          <h4>Companies & Groups</h4>
+          <p>Team building, seminars, group events: a memorable and original activity.</p>
+        </div>
+        <div class="tarif-card">
+          <span class="tarif-icon">🎈</span>
+          <h4>Birthdays & Celebrations</h4>
+          <p>Workshops for kids or adults to celebrate a special moment around cheese.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE BAND -->
+  <div class="quote-band">
+    <blockquote class="reveal">
+      <span class="quote-mark">"</span>
+      Cheese: milk's leap toward immortality.
+      <cite>— Clifton Fadiman</cite>
+    </blockquote>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container contact-grid">
+      <div class="contact-text reveal">
+        <p class="section-label">Contact</p>
+        <h2>Let's Plan Your Workshop</h2>
+        <p>Tell me what you have in mind — I'll get back to you quickly with a tailor-made proposal.</p>
+        <div class="contact-info">
+          <a href="mailto:contact@say-cheese.fr" class="contact-link">
+            <span>✉</span> contact@say-cheese.fr
+          </a>
+          <p class="contact-zone">📍 Workshops held within Paris</p>
+        </div>
+      </div>
+      <form class="contact-form reveal" id="contact-form" action="https://formspree.io/f/xojzqgdy" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="atelier">Preferred Workshop</label>
+          <select id="atelier" name="atelier">
+            <option value="">Select a workshop…</option>
+            <option>Discovering Exceptional Cheeses</option>
+            <option>Cheese & Drink Pairing</option>
+            <option>Cheese for Kids (Ages 3–12)</option>
+            <option>Not decided yet</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guests">Number of Guests</label>
+            <input type="number" id="guests" name="guests" min="1" placeholder="e.g. 8" />
+          </div>
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell me about your trip, group, and what you'd love to taste…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Send My Request →</button>
+        <p class="form-note">Guaranteed response within 48 hours.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <a href="#" class="logo logo-footer"><img src="../logo.png" alt="Say cHEESE" class="logo-img logo-img-footer" /></a>
+      <p class="footer-tagline">Cheese & Drink Pairing Workshops · Paris</p>
+      <nav class="footer-nav">
+        <a href="#about">About</a>
+        <a href="#ateliers">Workshops</a>
+        <a href="#contact">Contact</a>
+        <a href="legal-notice.html">Legal Notice</a>
+        <a href="../index.html" onclick="try{localStorage.setItem('sc-lang','fr')}catch(e){}">Français</a>
+      </nav>
+      <p class="footer-copy">© 2026 Say CHEESE — Hugues Duproz · SIREN 105 900 740</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

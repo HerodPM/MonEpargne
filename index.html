@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    // Auto-redirect to English version based on browser language,
+    // unless the visitor already picked a language explicitly.
+    (function () {
+      try {
+        var pref = localStorage.getItem('sc-lang');
+        if (pref === 'fr') return;
+        if (pref === 'en') {
+          window.location.replace('en/index.html' + window.location.search + window.location.hash);
+          return;
+        }
+        var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+        if (lang.indexOf('fr') !== 0) {
+          window.location.replace('en/index.html' + window.location.search + window.location.hash);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Say CHEESE</title>
+  <meta name="description" content="Ateliers de dégustation fromages et accords boissons à Paris. Pour particuliers, enfants et entreprises." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta property="og:title" content="Say CHEESE — Ateliers fromages & accords boissons" />
+  <meta property="og:description" content="Ateliers de dégustation fromages et accords boissons à Paris. Pour particuliers, enfants et entreprises." />
+  <meta property="og:image" content="https://say-cheese-one.vercel.app/hero.png" />
+  <meta property="og:url" content="https://say-cheese.fr" />
+  <meta property="og:type" content="website" />
+  <link rel="alternate" hreflang="fr" href="https://say-cheese.fr/" />
+  <link rel="alternate" hreflang="en" href="https://say-cheese.fr/en/" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="logo"><img src="logo.png" alt="Say cHEESE" class="logo-img" /></a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#ateliers">Ateliers</a></li>
+      <li><a href="#tarifs">Tarifs</a></li>
+      <li><a href="#contact" class="nav-cta">Réserver</a></li>
+      <li><a href="en/index.html" class="lang-switch" onclick="try{localStorage.setItem('sc-lang','en')}catch(e){}">EN</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <img src="hero.png" alt="Plateau de fromages" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content reveal">
+      <p class="hero-eyebrow">✦ Ateliers de dégustation à Paris ✦</p>
+      <h1>L'art du fromage,<br /><em>partagé avec passion</em></h1>
+      <p class="hero-sub">Découvrez les secrets des fromages d'exception et des accords boissons — pour particuliers et entreprises</p>
+      <div class="hero-actions">
+        <a href="#ateliers" class="btn btn-primary">Découvrir les ateliers</a>
+        <a href="#contact" class="btn btn-ghost">Demander un devis</a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-indicator" aria-label="Défiler vers le bas">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container about-grid">
+      <div class="about-image reveal">
+        <img src="photo-hugues.jpg" alt="Hugues Duproz" />
+        <div class="about-badge">
+          <span class="badge-icon">🎓</span>
+          <span>Formé à l'École<br />Française du Fromage</span>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p class="section-label">Qui je suis</p>
+        <h2>Hugues Duproz</h2>
+        <p class="about-lead">Professionnel de la tech le jour, passionné de fromages toujours.</p>
+        <p>Depuis des années, j'arpente les fromageries et rencontre les producteurs pour découvrir les meilleurs fromages d'Europe. Ma passion pour le terroir s'étend aux vins et aux bières — une combinaison naturelle qui donne naissance aux accords les plus savoureux.</p>
+        <p>Formé à l'<strong>École Française du Fromage</strong>, spécialisé en organolepsie <em>(identifier les saveurs et les arômes)</em> et en animation de dégustation, j'ai commencé à partager ma passion avec des amis, puis des collègues, puis des groupes de particuliers, et aujourd'hui des entreprises.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-number">3</span>
+            <span class="stat-label">formats d'ateliers</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">Paris</span>
+            <span class="stat-label">intra-muros</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">passion & savoir-faire</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATELIERS -->
+  <section id="ateliers">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Ce que je propose</p>
+        <h2>Les ateliers</h2>
+        <p class="section-desc">Des expériences sensorielles conçues pour tous les publics, à domicile ou en entreprise à Paris intra-muros.</p>
+      </div>
+      <div class="ateliers-grid">
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="atelier1.jpg" alt="Fromages d'exception" />
+            <span class="card-number">01</span>
+          </div>
+          <div class="card-body">
+            <h3>À la découverte des fromages d'exception</h3>
+            <p>Un voyage à travers les terroirs français et européens. Apprenez à reconnaître, analyser et apprécier les fromages d'exception — leur histoire, leur fabrication, leurs arômes.</p>
+            <ul class="card-details">
+              <li>🧀 Sélection de fromages rares et emblématiques</li>
+              <li>🍽️ Dégustation incluse</li>
+              <li>📍 À domicile ou en entreprise</li>
+              <li>👥 Particuliers & entreprises</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Demander un devis</a>
+          </div>
+        </article>
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=85&fit=crop" alt="Accord fromage et vin" />
+            <span class="card-number">02</span>
+          </div>
+          <div class="card-body">
+            <h3>Comment construire un accord fromage&nbsp;/ boisson</h3>
+            <p>Vins, bières, cidres… apprenez les règles et les subtilités des accords mets-boissons. Un atelier interactif pour ne plus jamais servir le mauvais vin avec le mauvais fromage.</p>
+            <ul class="card-details">
+              <li>🍷 Vins, bières, cidres au programme</li>
+              <li>🍽️ Dégustation incluse</li>
+              <li>📍 À domicile ou en entreprise</li>
+              <li>👥 Particuliers & entreprises</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Demander un devis</a>
+          </div>
+        </article>
+
+        <article class="atelier-card reveal">
+          <div class="card-image">
+            <img src="atelier3.jpg" alt="Atelier fromage enfants" />
+            <span class="card-number">03</span>
+          </div>
+          <div class="card-body">
+            <h3>Le fromage pour les petits <span class="age-badge">3–12 ans</span></h3>
+            <p>Un atelier ludique et sensoriel spécialement conçu pour les enfants. Toucher, sentir, goûter : les petits découvrent le monde fascinant du fromage dans une ambiance joyeuse et pédagogique.</p>
+            <ul class="card-details">
+              <li>🎉 Format ludique & participatif</li>
+              <li>🍽️ Dégustation incluse</li>
+              <li>📍 À domicile ou ailleurs</li>
+              <li>👶 De 3 à 12 ans</li>
+            </ul>
+            <a href="#contact" class="btn btn-outline">Demander un devis</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉFÉRENCES -->
+  <section id="references">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Ils ont testé et approuvé</p>
+        <h2>Say CHEESE</h2>
+      </div>
+      <div class="refs-grid reveal">
+        <div class="ref-logo"><img src="logo-fdj.png" alt="FDJ United" style="height:64px;" /></div>
+        <div class="ref-logo"><img src="logo-bpce.png" alt="BPCE" /></div>
+        <div class="ref-logo"><img src="logo-wefiit.png" alt="WeFiiT" style="height:32px;" /></div>
+        <div class="ref-logo"><img src="logo-velite.svg" alt="Cabinet Vélite" style="height:36px;" /></div>
+        <div class="ref-logo"><img src="logo-petiteforet.png" alt="Petite Forêt — Café et Ateliers" style="height:44px;" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMBIANCE STRIP -->
+  <div class="photo-strip">
+    <img src="strip1.jpg" alt="" />
+    <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80&fit=crop" alt="" />
+    <img src="strip3.jpg" alt="" />
+    <img src="strip4.jpg" alt="" />
+    <img src="strip5.jpg" alt="" />
+  </div>
+
+  <!-- TARIFS -->
+  <section id="tarifs">
+    <div class="container tarifs-inner reveal">
+      <div class="tarifs-text">
+        <p class="section-label">Tarifs</p>
+        <h2>Une expérience<br /><em>sur mesure</em></h2>
+        <p>Chaque atelier est adapté à votre contexte : nombre de participants, lieu, durée, sélection de produits. Les tarifs sont établis sur devis, en fonction de vos besoins.</p>
+        <p>Je m'adapte à votre budget tout en maintenant une qualité de sélection irréprochable.</p>
+        <a href="#contact" class="btn btn-primary">Obtenir un devis gratuit</a>
+      </div>
+      <div class="tarifs-cards">
+        <div class="tarif-card">
+          <span class="tarif-icon">🏠</span>
+          <h4>Particuliers</h4>
+          <p>À domicile, pour un dîner entre amis, une soirée en famille ou un événement privé.</p>
+        </div>
+        <div class="tarif-card">
+          <span class="tarif-icon">🏢</span>
+          <h4>Entreprises & CE</h4>
+          <p>Team building, séminaire, événement d'équipe : une animation originale et mémorable.</p>
+        </div>
+        <div class="tarif-card">
+          <span class="tarif-icon">🎈</span>
+          <h4>Anniversaires & fêtes</h4>
+          <p>Atelier enfants ou adultes pour célébrer un moment spécial autour du fromage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE BAND -->
+  <div class="quote-band">
+    <blockquote class="reveal">
+      <span class="quote-mark">"</span>
+      Le fromage est le saut de l'amour vers la sagesse.
+      <cite>— Clifton Fadiman</cite>
+    </blockquote>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container contact-grid">
+      <div class="contact-text reveal">
+        <p class="section-label">Contact</p>
+        <h2>Organisons votre atelier</h2>
+        <p>Dites-moi ce que vous imaginez — je reviens vers vous rapidement avec une proposition sur mesure.</p>
+        <div class="contact-info">
+          <a href="mailto:contact@say-cheese.fr" class="contact-link">
+            <span>✉</span> contact@say-cheese.fr
+          </a>
+          <p class="contact-zone">📍 Interventions à Paris intra-muros</p>
+        </div>
+      </div>
+      <form class="contact-form reveal" id="contact-form" action="https://formspree.io/f/xojzqgdy" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Prénom & nom *</label>
+            <input type="text" id="name" name="name" required placeholder="Marie Dupont" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="marie@exemple.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="atelier">Atelier souhaité</label>
+          <select id="atelier" name="atelier">
+            <option value="">Sélectionner un atelier…</option>
+            <option>À la découverte des fromages d'exception</option>
+            <option>Accord fromage / boisson</option>
+            <option>Le fromage pour les petits (3–12 ans)</option>
+            <option>Pas encore décidé</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guests">Nombre de participants</label>
+            <input type="number" id="guests" name="guests" min="1" placeholder="ex : 8" />
+          </div>
+          <div class="form-group">
+            <label for="date">Date souhaitée</label>
+            <input type="date" id="date" name="date" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Décrivez votre projet, vos contraintes, vos envies…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Envoyer ma demande →</button>
+        <p class="form-note">Réponse garantie sous 48h.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <a href="#" class="logo logo-footer"><img src="logo.png" alt="Say cHEESE" class="logo-img logo-img-footer" /></a>
+      <p class="footer-tagline">Ateliers fromages & accords boissons · Paris</p>
+      <nav class="footer-nav">
+        <a href="#about">À propos</a>
+        <a href="#ateliers">Ateliers</a>
+        <a href="#contact">Contact</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="en/index.html" onclick="try{localStorage.setItem('sc-lang','en')}catch(e){}">English</a>
+      </nav>
+      <p class="footer-copy">© 2026 Say CHEESE — Hugues Duproz · SIREN 105 900 740</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
