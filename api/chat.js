@@ -146,6 +146,35 @@ module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.status(200).end();
+  // Diagnostic : ouvrir /api/chat?diag=1 dans le navigateur
+  if (req.method === "GET" && req.query && req.query.diag) {
+    var key = process.env.GEMINI_API_KEY || "";
+    var diag = {
+      cle_presente: key.length > 0,
+      debut_cle: key.slice(0, 4) + " (doit être AIza)",
+      longueur_cle: key.length,
+      mot_de_passe_configure: !!process.env.ACCESS_PASSWORD,
+      modele: process.env.GEMINI_MODEL || "gemini-flash-latest"
+    };
+    try {
+      var t0 = Date.now();
+      var ctl = new AbortController();
+      var tm = setTimeout(function () { ctl.abort(); }, 20000);
+      var r = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+        signal: ctl.signal,
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+        body: JSON.stringify({ model: diag.modele, messages: [{ role: "user", content: "Réponds juste OK" }], max_tokens: 50 })
+      });
+      clearTimeout(tm);
+      diag.gemini_statut = r.status;
+      diag.gemini_duree_ms = Date.now() - t0;
+      diag.gemini_reponse = (await r.text()).slice(0, 800);
+    } catch (e) {
+      diag.gemini_erreur = e.name === "AbortError" ? "Pas de réponse de Gemini en 20 s" : e.message;
+    }
+    return res.status(200).json(diag);
+  }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   var body = req.body;
@@ -171,13 +200,17 @@ module.exports = async function handler(req, res) {
       model: process.env.GEMINI_MODEL || "gemini-flash-latest",
       messages: mistralMessages,
       max_tokens: 4000,
-      temperature: 0.7
+      temperature: 0.7,
+      reasoning_effort: "low"
     });
 
     // Appel avec 2 nouvelles tentatives en cas de 429
     var response;
     for (var attempt = 0; attempt < 3; attempt++) {
+      var controller = new AbortController();
+      var timer = setTimeout(function () { controller.abort(); }, 25000);
       response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+        signal: controller.signal,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -185,6 +218,8 @@ module.exports = async function handler(req, res) {
         },
         body: payload
       });
+      clearTimeout(timer);
+      console.log("Gemini status:", response.status, "tentative", attempt + 1);
       if (response.status !== 429) break;
       var retryAfter = parseFloat(response.headers.get("retry-after"));
       var waitMs = !isNaN(retryAfter) ? Math.min(retryAfter * 1000, 5000) : 1500 * (attempt + 1);
@@ -207,6 +242,11 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ reply: reply });
 
   } catch (err) {
+    if (err.name === "AbortError") {
+      return res.status(504).json({ error: "Gemini n'a pas répondu en 25 s. Réessayez." });
+    }
     return res.status(500).json({ error: "Erreur serveur : " + err.message });
   }
 };
+
+module.exports.config = { maxDuration: 60 };
