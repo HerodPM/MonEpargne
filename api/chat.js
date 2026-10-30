@@ -1,4 +1,4 @@
-// api/chat.js -- Serverless function Vercel -- Proxy Mistral -- v2 conversationnel
+// api/chat.js -- Serverless function Vercel -- Proxy Gemini -- v2 conversationnel
 
 const SYSTEM_PROMPT = `
 Tu es un assistant epargne integre dans l'application mobile de la Banque Populaire (groupe BPCE).
@@ -166,21 +166,22 @@ module.exports = async function handler(req, res) {
   var mistralMessages = [{ role: "system", content: SYSTEM_PROMPT }].concat(messages);
 
   try {
+    // Gemini via l'endpoint compatible OpenAI (modèle surchargeable via GEMINI_MODEL)
     var payload = JSON.stringify({
-      model: "mistral-small-latest",
+      model: process.env.GEMINI_MODEL || "gemini-flash-latest",
       messages: mistralMessages,
-      max_tokens: 1500,
+      max_tokens: 4000,
       temperature: 0.7
     });
 
-    // Appel Mistral avec 2 nouvelles tentatives en cas de 429
+    // Appel avec 2 nouvelles tentatives en cas de 429
     var response;
     for (var attempt = 0; attempt < 3; attempt++) {
-      response = await fetch("https://api.mistral.ai/v1/chat/completions", {
+      response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + process.env.MISTRAL_API_KEY
+          "Authorization": "Bearer " + process.env.GEMINI_API_KEY
         },
         body: payload
       });
@@ -191,8 +192,14 @@ module.exports = async function handler(req, res) {
     }
 
     if (!response.ok) {
-      var err = await response.json();
-      return res.status(response.status).json({ error: err.message || "Erreur API Mistral" });
+      var raw = await response.text();
+      var msg = "Erreur API Gemini";
+      try {
+        var err = JSON.parse(raw);
+        if (Array.isArray(err)) err = err[0];
+        msg = (err.error && err.error.message) || err.message || msg;
+      } catch (e) {}
+      return res.status(response.status).json({ error: msg });
     }
 
     var data = await response.json();
