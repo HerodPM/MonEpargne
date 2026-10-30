@@ -279,6 +279,25 @@
   .send-btn:disabled { background: var(--gray-mid); cursor: not-allowed; }
   .send-btn svg { width: 18px; height: 18px; fill: white; }
 
+  /* Micro (dictée vocale) */
+  .mic-btn {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: white; border: 2px solid var(--gray-mid); border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  }
+  .mic-btn:hover { border-color: var(--navy); }
+  .mic-btn:active { transform: scale(0.94); }
+  .mic-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .mic-btn svg { width: 20px; height: 20px; fill: var(--navy); }
+  .mic-btn.listening { background: var(--red); border-color: var(--red); animation: micpulse 1.4s infinite; }
+  .mic-btn.listening svg { fill: white; }
+  @keyframes micpulse {
+    0% { box-shadow: 0 0 0 0 rgba(227, 0, 15, 0.45); }
+    70% { box-shadow: 0 0 0 10px rgba(227, 0, 15, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(227, 0, 15, 0); }
+  }
+
   .app-footer {
     text-align: center;
     font-size: 11px; color: var(--text-light);
@@ -355,11 +374,14 @@
       <textarea
         class="chat-input"
         id="chat-input"
-        placeholder="Écrivez votre réponse…"
+        placeholder="Écrivez ou dictez votre réponse…"
         rows="1"
         onkeydown="handleKey(event)"
         oninput="autoResize(this)"
       ></textarea>
+      <button class="mic-btn" id="mic-btn" type="button" onclick="toggleVoice()" title="Dicter votre message" aria-label="Dicter votre message">
+        <svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>
+      </button>
       <button class="send-btn" id="send-btn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
       </button>
@@ -448,6 +470,7 @@
 
   async function sendMessage() {
     const input = document.getElementById('chat-input');
+    stopVoice(true);
     const text = input.value.trim();
     if (!text || loading) return;
     input.value = '';
@@ -553,6 +576,82 @@
     loading = state;
     document.getElementById('send-btn').disabled = state;
     document.getElementById('chat-input').disabled = state;
+    const mic = document.getElementById('mic-btn');
+    if (mic) mic.disabled = state;
+    if (state) stopVoice(true);
+  }
+
+  // =====================
+  // DICTÉE VOCALE (Web Speech API)
+  // =====================
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognition = null;
+  let listening = false;
+  let baseText = '';
+
+  if (!SpeechRec) {
+    // Navigateur non compatible (ex. Firefox) : on masque le micro
+    const mic = document.getElementById('mic-btn');
+    if (mic) mic.style.display = 'none';
+  }
+
+  function toggleVoice() {
+    if (listening) { stopVoice(false); return; }
+    startVoice();
+  }
+
+  function startVoice() {
+    if (!SpeechRec || loading) return;
+    const input = document.getElementById('chat-input');
+    baseText = input.value.trim() ? input.value.trim() + ' ' : '';
+
+    recognition = new SpeechRec();
+    recognition.lang = 'fr-FR';
+    recognition.interimResults = true;
+    recognition.continuous = true;
+
+    recognition.onresult = (event) => {
+      let finalText = '';
+      let interimText = '';
+      for (let i = 0; i < event.results.length; i++) {
+        const t = event.results[i][0].transcript;
+        if (event.results[i].isFinal) finalText += t; else interimText += t;
+      }
+      input.value = baseText + finalText + interimText;
+      autoResize(input);
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+        alert("Accès au micro refusé. Autorisez le micro pour ce site dans les paramètres du navigateur.");
+      }
+    };
+
+    recognition.onend = () => {
+      listening = false;
+      updateMicUI();
+      input.focus();
+    };
+
+    recognition.start();
+    listening = true;
+    updateMicUI();
+  }
+
+  function stopVoice(immediate) {
+    if (!recognition || !listening) return;
+    if (immediate) recognition.abort(); else recognition.stop();
+    listening = false;
+    updateMicUI();
+  }
+
+  function updateMicUI() {
+    const mic = document.getElementById('mic-btn');
+    if (!mic) return;
+    mic.classList.toggle('listening', listening);
+    mic.title = listening ? 'Arrêter la dictée' : 'Dicter votre message';
+    mic.setAttribute('aria-label', mic.title);
+    document.getElementById('chat-input').placeholder = listening ? 'Je vous écoute…' : 'Écrivez ou dictez votre réponse…';
   }
 
   function handleKey(e) {
