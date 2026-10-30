@@ -155,6 +155,10 @@ module.exports = async function handler(req, res) {
   if (password !== process.env.ACCESS_PASSWORD) {
     return res.status(401).json({ error: "Mot de passe incorrect." });
   }
+  // Simple vérification du mot de passe : pas d'appel Mistral
+  if (body.checkOnly) {
+    return res.status(200).json({ ok: true });
+  }
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: "Messages invalides." });
   }
@@ -162,19 +166,29 @@ module.exports = async function handler(req, res) {
   var mistralMessages = [{ role: "system", content: SYSTEM_PROMPT }].concat(messages);
 
   try {
-    var response = await fetch("https://api.mistral.ai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + process.env.MISTRAL_API_KEY
-      },
-      body: JSON.stringify({
-        model: "mistral-small-latest",
-        messages: mistralMessages,
-        max_tokens: 1500,
-        temperature: 0.7
-      })
+    var payload = JSON.stringify({
+      model: "mistral-small-latest",
+      messages: mistralMessages,
+      max_tokens: 1500,
+      temperature: 0.7
     });
+
+    // Appel Mistral avec 2 nouvelles tentatives en cas de 429
+    var response;
+    for (var attempt = 0; attempt < 3; attempt++) {
+      response = await fetch("https://api.mistral.ai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + process.env.MISTRAL_API_KEY
+        },
+        body: payload
+      });
+      if (response.status !== 429) break;
+      var retryAfter = parseFloat(response.headers.get("retry-after"));
+      var waitMs = !isNaN(retryAfter) ? Math.min(retryAfter * 1000, 5000) : 1500 * (attempt + 1);
+      await new Promise(function (r) { setTimeout(r, waitMs); });
+    }
 
     if (!response.ok) {
       var err = await response.json();
